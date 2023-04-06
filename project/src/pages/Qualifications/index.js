@@ -6,8 +6,23 @@ import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
+import {useState,useEffect} from 'react';
+import axios from 'axios';
 
-export default function Qualifications() {
+export default function Qualifications(){
+  const [loader,setLoader] = useState(true);
+  const [Qualifications,setQualifications] = useState(null);
+
+  const connectToServer = async () => axios.get('http://localhost:8000/Qualifications')
+                           .then(res=>{
+                            console.log(res.data);
+                            setQualifications(res.data);
+                            setLoader(false)
+                           }).catch(err=>console.log(err))
+      useEffect(()=>{
+        connectToServer();
+      },[])
+           console.log("Qualifications",Qualifications)
   return (
     <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper', p: 3}}>
       <h1 className='mode'>Qualifications</h1>
